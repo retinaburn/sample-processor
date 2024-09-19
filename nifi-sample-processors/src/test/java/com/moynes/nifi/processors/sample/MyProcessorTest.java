@@ -16,6 +16,12 @@
  */
 package com.moynes.nifi.processors.sample;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+
+import org.apache.nifi.flowfile.FlowFile;
+import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +38,26 @@ public class MyProcessorTest {
 
     @Test
     public void testProcessor() {
+        testRunner.setProperty(MyProcessor.MY_PROPERTY, "blah");
+        testRunner.run();
+        testRunner.assertQueueEmpty();
+        
+        testRunner.enqueue("DATA");
+        testRunner.assertQueueNotEmpty();
+        testRunner.run();
+        
+        List<MockFlowFile> results = testRunner.getFlowFilesForRelationship(MyProcessor.REL_SUCCESS);
+        testRunner.assertQueueEmpty();
+        assertTrue(results.size() == 1, "Flow files in success queue should be 1");
+        testRunner.clearTransferState();
+        
+        FlowFile flowFile = new MockFlowFile(12345l);
+        testRunner.enqueue(flowFile);
+        testRunner.run();
 
+        results = testRunner.getFlowFilesForRelationship(MyProcessor.REL_SUCCESS);
+        testRunner.assertQueueEmpty();
+        assertTrue(results.size() == 1, "Flow files in success queue should be 1");
     }
 
 }

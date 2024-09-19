@@ -1,4 +1,6 @@
+*.class
 target/**
 nifi-sample-nar/target/**
 nifi-sample-processors/target/**
 nifi-sample-processors/target/test-classes/**
+nifi-sample-processors/target/test-classes/com/moynes/nifi/processors/sample/MyProcessorTest.class
