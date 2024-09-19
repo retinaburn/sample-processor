@@ -1,3 +1,4 @@
 target/**
 nifi-sample-nar/target/**
 nifi-sample-processors/target/**
+nifi-sample-processors/target/test-classes/**
