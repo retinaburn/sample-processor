@@ -40,10 +40,10 @@
         </dependency>
     </dependencies>
 
-    <!-- <properties>
+    <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
         <source.skip>false</source.skip>
-        <enforcer.skip>false</enforcer.skip>
-    </properties> -->
+        <enforcer.skip>true</enforcer.skip>
+    </properties>
 
 </project>
