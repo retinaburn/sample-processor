@@ -34,8 +34,6 @@ public class MyProcessorTest {
     @BeforeEach
     public void init() {
         testRunner = TestRunners.newTestRunner(MyProcessor.class);
-        // Logger logger = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        // logger.setLevel(Level.DEBUG);
     }
 
     @Test
