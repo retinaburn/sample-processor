@@ -26,10 +26,6 @@ import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 public class MyProcessorTest {
 
@@ -38,8 +34,8 @@ public class MyProcessorTest {
     @BeforeEach
     public void init() {
         testRunner = TestRunners.newTestRunner(MyProcessor.class);
-        //Logger logger = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        //logger.setLevel(Level.DEBUG);
+        // Logger logger = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        // logger.setLevel(Level.DEBUG);
     }
 
     @Test
@@ -47,16 +43,16 @@ public class MyProcessorTest {
         testRunner.setProperty(MyProcessor.MY_PROPERTY, "blah");
         testRunner.run();
         testRunner.assertQueueEmpty();
-        
+
         testRunner.enqueue("DATA");
         testRunner.assertQueueNotEmpty();
         testRunner.run();
-        
+
         List<MockFlowFile> results = testRunner.getFlowFilesForRelationship(MyProcessor.REL_SUCCESS);
         testRunner.assertQueueEmpty();
         assertTrue(results.size() == 1, "Flow files in success queue should be 1");
         testRunner.clearTransferState();
-        
+
         MockFlowFile mockFlowFile = new MockFlowFile(12345l);
         mockFlowFile.setData("HI THERE".getBytes());
         FlowFile flowFile = mockFlowFile;
