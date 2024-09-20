@@ -32,10 +32,14 @@ import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.ProcessorInitializationContext;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.util.StandardValidators;
+import org.apache.nifi.provenance.ProvenanceReporter;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Tags({"example"})
 @CapabilityDescription("Provide a description")
 @SeeAlso({})
@@ -89,6 +93,16 @@ public class MyProcessor extends AbstractProcessor {
         if (flowFile == null) {
             return;
         }
+        session.write(flowFile, (input, output) -> {
+            byte[] bytes = new byte[1024];
+            input.read(bytes);
+            log.debug("Input: {}", bytes);
+            output.write(bytes);
+
+        });
+
+        ProvenanceReporter provenance = session.getProvenanceReporter();
+        provenance.modifyContent(flowFile, "Modifying the data to the new format", 1l);
         // TODO implement
 
         session.transfer(flowFile, REL_SUCCESS);
