@@ -27,6 +27,9 @@ import org.apache.nifi.util.TestRunners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MyProcessorTest {
 
     private TestRunner testRunner;
@@ -56,6 +59,8 @@ public class MyProcessorTest {
         FlowFile flowFile = mockFlowFile;
         testRunner.enqueue(flowFile);
         testRunner.run();
+
+        log.debug("Provenance: {}", testRunner.getProvenanceEvents());
 
         results = testRunner.getFlowFilesForRelationship(MyProcessor.REL_SUCCESS);
         testRunner.assertQueueEmpty();
